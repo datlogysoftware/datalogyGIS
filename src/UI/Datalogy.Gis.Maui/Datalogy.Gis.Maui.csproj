@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+
+    <RootNamespace>Datalogy.Gis.Maui</RootNamespace>
+    <AssemblyName>Datalogy.Gis.Maui</AssemblyName>
+    <Description>.NET MAUI controls and components for DatalogySoftware GIS Framework. Build cross-platform mapping applications for iOS, Android, Windows, and macOS.</Description>
+    <PackageTags>$(PackageTags);maui;mobile;cross-platform</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Rendering\Datalogy.Gis.Rendering.SkiaSharp\Datalogy.Gis.Rendering.SkiaSharp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

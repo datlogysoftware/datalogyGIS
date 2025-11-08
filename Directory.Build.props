@@ -1,0 +1,41 @@
+<Project>
+  <PropertyGroup>
+    <!-- Company & Product Info -->
+    <Company>DatalogySoftware</Company>
+    <Authors>DatalogySoftware</Authors>
+    <Product>DatalogySoftware GIS Framework</Product>
+    <Copyright>Copyright © 2024 DatalogySoftware</Copyright>
+
+    <!-- Versioning -->
+    <VersionPrefix>3.0.0</VersionPrefix>
+    <VersionSuffix>preview</VersionSuffix>
+
+    <!-- .NET Configuration -->
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Package Configuration -->
+    <PackageProjectUrl>https://www.datalogysoft.com/gis</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/datalogysoft/gis-framework</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>gis;geospatial;datalogysoft;datalogy;spatial;mapping;netstandard;dotnet;csharp</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
+    <Description>DatalogySoftware GIS Framework - Powering Next-Generation Geospatial Intelligence for .NET</Description>
+
+    <!-- Build Configuration -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+
+    <!-- Strong Naming -->
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+</Project>

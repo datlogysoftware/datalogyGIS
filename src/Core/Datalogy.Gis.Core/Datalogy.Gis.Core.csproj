@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Datalogy.Gis.Core</RootNamespace>
+    <AssemblyName>Datalogy.Gis.Core</AssemblyName>
+    <Description>Core library for DatalogySoftware GIS Framework. Contains fundamental types, interfaces, and abstractions for geospatial data processing.</Description>
+    <PackageTags>$(PackageTags);core;geometry;coordinates</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetTopologySuite" Version="2.5.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>
