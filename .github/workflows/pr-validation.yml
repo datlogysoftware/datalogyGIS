@@ -23,6 +23,9 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
+    - name: Install .NET MAUI workloads
+      run: dotnet workload install maui
+
     - name: Restore dependencies
       run: dotnet restore DatalogySoftware.Gis.sln
 

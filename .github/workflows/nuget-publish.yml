@@ -31,6 +31,9 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
+    - name: Install .NET MAUI workloads
+      run: dotnet workload install maui
+
     - name: Get version
       id: version
       run: |
