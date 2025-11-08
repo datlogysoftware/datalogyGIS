@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DatalogySoftware.Gis.Samples.MauiMap.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- DatalogySoftware GIS Brand Colors -->
+            <Color x:Key="Primary">#0066CC</Color>
+            <Color x:Key="Secondary">#00A86B</Color>
+            <Color x:Key="Accent">#FF6B35</Color>
+            <Color x:Key="Dark">#2C3E50</Color>
+            <Color x:Key="Light">#ECF0F1</Color>
+
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="16,12" />
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource Dark}" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

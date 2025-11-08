@@ -1,0 +1,150 @@
+@page "/"
+@using Datalogy.Gis.Blazor.Components
+@using Datalogy.Gis.Domain.Entities
+
+<PageTitle>DatalogySoftware GIS - Blazor Sample</PageTitle>
+
+<div class="main-content">
+
+    <!-- Welcome Card -->
+    <div class="info-card">
+        <h3>Welcome to DatalogySoftware GIS Framework</h3>
+        <p>
+            This sample demonstrates the Blazor MapComponent from the DatalogySoftware GIS Framework.
+            Click on the map or use the city buttons below to explore the interactive mapping capabilities.
+        </p>
+    </div>
+
+    <!-- Map Container -->
+    <div class="map-container">
+        <h3>Interactive Map</h3>
+
+        <MapComponent
+            MapId="main-map"
+            CenterLatitude="@centerLatitude"
+            CenterLongitude="@centerLongitude"
+            ZoomLevel="@zoomLevel"
+            Width="100%"
+            Height="600px"
+            ShowZoomControls="true"
+            OnMapClick="HandleMapClick" />
+
+        @if (!string.IsNullOrEmpty(clickedCoordinates))
+        {
+            <div class="coordinates-display">
+                <strong>Last Clicked Location:</strong><br />
+                @clickedCoordinates
+            </div>
+        }
+    </div>
+
+    <!-- Control Panel -->
+    <div class="map-container">
+        <h3>Map Controls</h3>
+
+        <div class="control-panel">
+            <div class="control-group">
+                <label>Quick Navigation</label>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary" @onclick="GoToIstanbul">Istanbul</button>
+                    <button class="btn btn-primary" @onclick="GoToLondon">London</button>
+                    <button class="btn btn-primary" @onclick="GoToParis">Paris</button>
+                    <button class="btn btn-primary" @onclick="GoToNewYork">New York</button>
+                    <button class="btn btn-primary" @onclick="GoToTokyo">Tokyo</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Zoom Level: @zoomLevel</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary" @onclick="ZoomIn">Zoom In (+)</button>
+                    <button class="btn btn-secondary" @onclick="ZoomOut">Zoom Out (-)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Info -->
+    <div class="map-container">
+        <h3>Sample Cities</h3>
+        <ul class="feature-list">
+            @foreach (var city in sampleCities)
+            {
+                <li class="feature-item" @onclick="() => GoToCity(city)">
+                    <strong>@city.Name</strong><br />
+                    <small>@city.Country | Lat: @city.Latitude.ToString("F4"), Lon: @city.Longitude.ToString("F4")</small>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!-- Framework Info -->
+    <div class="info-card">
+        <h3>About DatalogySoftware GIS Framework</h3>
+        <ul>
+            <li><strong>Version:</strong> 3.0.0-preview</li>
+            <li><strong>Platform:</strong> .NET 8 with Blazor WebAssembly</li>
+            <li><strong>Namespace:</strong> Datalogy.Gis.*</li>
+            <li><strong>License:</strong> MIT</li>
+        </ul>
+        <p>
+            Visit <a href="https://docs.datalogysoft.com/gis" target="_blank">documentation</a> for more information.
+        </p>
+    </div>
+
+</div>
+
+@code {
+    private double centerLatitude = 41.0082;
+    private double centerLongitude = 28.9784;
+    private int zoomLevel = 10;
+    private string? clickedCoordinates;
+
+    private record CityInfo(string Name, string Country, double Latitude, double Longitude);
+
+    private readonly List<CityInfo> sampleCities = new()
+    {
+        new("Istanbul", "Turkey", 41.0082, 28.9784),
+        new("London", "United Kingdom", 51.5074, -0.1276),
+        new("Paris", "France", 48.8566, 2.3522),
+        new("New York", "United States", 40.7128, -74.0060),
+        new("Tokyo", "Japan", 35.6895, 139.6917),
+        new("Sydney", "Australia", -33.8688, 151.2093),
+        new("Dubai", "UAE", 25.2048, 55.2708),
+        new("Singapore", "Singapore", 1.3521, 103.8198),
+        new("São Paulo", "Brazil", -23.5505, -46.6333),
+        new("Cairo", "Egypt", 30.0444, 31.2357)
+    };
+
+    private void HandleMapClick((double Lat, double Lon) coordinates)
+    {
+        clickedCoordinates = $"Latitude: {coordinates.Lat:F6}, Longitude: {coordinates.Lon:F6}";
+        StateHasChanged();
+    }
+
+    private void GoToCity(CityInfo city)
+    {
+        centerLatitude = city.Latitude;
+        centerLongitude = city.Longitude;
+        zoomLevel = 11;
+        clickedCoordinates = $"{city.Name}, {city.Country}";
+    }
+
+    private void GoToIstanbul() => GoToCity(sampleCities[0]);
+    private void GoToLondon() => GoToCity(sampleCities[1]);
+    private void GoToParis() => GoToCity(sampleCities[2]);
+    private void GoToNewYork() => GoToCity(sampleCities[3]);
+    private void GoToTokyo() => GoToCity(sampleCities[4]);
+
+    private void ZoomIn()
+    {
+        if (zoomLevel < 20)
+            zoomLevel++;
+    }
+
+    private void ZoomOut()
+    {
+        if (zoomLevel > 1)
+            zoomLevel--;
+    }
+}

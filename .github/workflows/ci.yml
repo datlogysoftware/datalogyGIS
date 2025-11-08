@@ -1,0 +1,101 @@
+name: CI Build and Test
+
+on:
+  push:
+    branches: [ main, develop, 'claude/**' ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore DatalogySoftware.Gis.sln
+
+    - name: Build solution
+      run: dotnet build DatalogySoftware.Gis.sln --configuration Release --no-restore
+
+    - name: Run unit tests
+      run: |
+        dotnet test tests/Datalogy.Gis.Core.Tests/Datalogy.Gis.Core.Tests.csproj \
+          --configuration Release \
+          --no-build \
+          --verbosity normal \
+          --logger "trx;LogFileName=core-tests.trx" \
+          --collect:"XPlat Code Coverage"
+
+    - name: Run domain tests
+      run: |
+        dotnet test tests/Datalogy.Gis.Domain.Tests/Datalogy.Gis.Domain.Tests.csproj \
+          --configuration Release \
+          --no-build \
+          --verbosity normal \
+          --logger "trx;LogFileName=domain-tests.trx" \
+          --collect:"XPlat Code Coverage"
+
+    - name: Run integration tests
+      run: |
+        dotnet test tests/Datalogy.Gis.Data.Sqlite.Tests/Datalogy.Gis.Data.Sqlite.Tests.csproj \
+          --configuration Release \
+          --no-build \
+          --verbosity normal \
+          --logger "trx;LogFileName=sqlite-tests.trx" \
+          --collect:"XPlat Code Coverage"
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: |
+          **/TestResults/**/*.trx
+          **/TestResults/**/*.xml
+
+    - name: Upload code coverage
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: code-coverage
+        path: '**/TestResults/**/coverage.cobertura.xml'
+
+  code-quality:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore DatalogySoftware.Gis.sln
+
+    - name: Format check
+      run: dotnet format DatalogySoftware.Gis.sln --verify-no-changes --verbosity diagnostic
+      continue-on-error: true
+
+    - name: Build with warnings as errors
+      run: dotnet build DatalogySoftware.Gis.sln --configuration Release /p:TreatWarningsAsErrors=true
+      continue-on-error: true
