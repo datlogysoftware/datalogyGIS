@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Datalogy.Gis.Data.Sqlite</RootNamespace>
+    <AssemblyName>Datalogy.Gis.Data.Sqlite</AssemblyName>
+    <Description>SQLite data provider for DatalogySoftware GIS Framework. Includes Spatialite support for spatial queries.</Description>
+    <PackageTags>$(PackageTags);sqlite;spatialite;database</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Datalogy.Gis.Domain\Datalogy.Gis.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
+    <PackageReference Include="NetTopologySuite.IO.SpatiaLite" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>

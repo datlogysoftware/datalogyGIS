@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:gis="clr-namespace:Datalogy.Gis.Maui.Controls;assembly=Datalogy.Gis.Maui"
+             x:Class="DatalogySoftware.Gis.Samples.MauiMap.MainPage"
+             Title="DatalogySoftware GIS Framework - MAUI Sample">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,20">
+            <Label
+                Text="DatalogySoftware GIS Framework"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+            <Label
+                Text="Powering Next-Generation Geospatial Intelligence"
+                FontSize="14"
+                HorizontalOptions="Center"
+                Opacity="0.7" />
+        </VerticalStackLayout>
+
+        <!-- Map Control -->
+        <Border Grid.Row="1"
+                StrokeThickness="2"
+                Stroke="#0066CC"
+                StrokeShape="RoundRectangle 8">
+            <gis:MapView
+                x:Name="MapView"
+                CenterLatitude="{Binding CenterLatitude}"
+                CenterLongitude="{Binding CenterLongitude}"
+                ZoomLevel="{Binding ZoomLevel}"
+                MapTapped="OnMapTapped"
+                BackgroundColor="#ECF0F1" />
+        </Border>
+
+        <!-- Controls -->
+        <VerticalStackLayout Grid.Row="2" Spacing="10" Margin="0,20,0,0">
+            <Label x:Name="CoordinatesLabel"
+                   Text="Tap on the map to see coordinates"
+                   HorizontalOptions="Center"
+                   FontSize="12" />
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="Istanbul" Clicked="OnIstanbulClicked" />
+                <Button Text="London" Clicked="OnLondonClicked" />
+                <Button Text="New York" Clicked="OnNewYorkClicked" />
+            </HorizontalStackLayout>
+
+            <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="10">
+                <Button Grid.Column="0" Text="Zoom In" Clicked="OnZoomInClicked" />
+                <Label Grid.Column="1"
+                       Text="{Binding ZoomLevel, StringFormat='Zoom: {0}'}"
+                       VerticalOptions="Center"
+                       FontSize="12" />
+                <Button Grid.Column="2" Text="Zoom Out" Clicked="OnZoomOutClicked" />
+            </Grid>
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

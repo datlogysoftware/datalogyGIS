@@ -1,0 +1,72 @@
+@namespace Datalogy.Gis.Blazor.Components
+@using Microsoft.AspNetCore.Components
+
+<!-- DatalogySoftware GIS Framework - Blazor Map Component -->
+
+<div class="datalogy-map" style="width: @Width; height: @Height;" @ref="mapContainer">
+    <div class="map-overlay">
+        @if (ShowZoomControls)
+        {
+            <div class="zoom-controls">
+                <button @onclick="ZoomIn">+</button>
+                <button @onclick="ZoomOut">-</button>
+            </div>
+        }
+    </div>
+    <div class="map-canvas" id="@MapId"></div>
+</div>
+
+@code {
+    private ElementReference mapContainer;
+
+    [Parameter]
+    public string MapId { get; set; } = $"map-{Guid.NewGuid():N}";
+
+    [Parameter]
+    public string Width { get; set; } = "100%";
+
+    [Parameter]
+    public string Height { get; set; } = "500px";
+
+    [Parameter]
+    public double CenterLatitude { get; set; } = 0;
+
+    [Parameter]
+    public double CenterLongitude { get; set; } = 0;
+
+    [Parameter]
+    public int ZoomLevel { get; set; } = 10;
+
+    [Parameter]
+    public bool ShowZoomControls { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<(double Lat, double Lon)> OnMapClick { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Initialize map
+            await InitializeMap();
+        }
+    }
+
+    private async Task InitializeMap()
+    {
+        // Map initialization logic
+        await Task.CompletedTask;
+    }
+
+    private async Task ZoomIn()
+    {
+        ZoomLevel = Math.Min(20, ZoomLevel + 1);
+        await Task.CompletedTask;
+    }
+
+    private async Task ZoomOut()
+    {
+        ZoomLevel = Math.Max(1, ZoomLevel - 1);
+        await Task.CompletedTask;
+    }
+}

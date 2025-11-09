@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <RootNamespace>Datalogy.Gis.Blazor</RootNamespace>
+    <AssemblyName>Datalogy.Gis.Blazor</AssemblyName>
+    <Description>Blazor components for DatalogySoftware GIS Framework. Interactive web mapping components for Blazor Server and WebAssembly.</Description>
+    <PackageTags>$(PackageTags);blazor;web;components</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Datalogy.Gis.Domain\Datalogy.Gis.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+</Project>

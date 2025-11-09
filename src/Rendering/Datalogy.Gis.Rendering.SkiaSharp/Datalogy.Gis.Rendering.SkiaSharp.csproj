@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Datalogy.Gis.Rendering.SkiaSharp</RootNamespace>
+    <AssemblyName>Datalogy.Gis.Rendering.SkiaSharp</AssemblyName>
+    <Description>SkiaSharp-based rendering engine for DatalogySoftware GIS Framework. High-performance cross-platform map rendering.</Description>
+    <PackageTags>$(PackageTags);rendering;skiasharp;graphics</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Datalogy.Gis.Rendering.Core\Datalogy.Gis.Rendering.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="2.88.6" />
+  </ItemGroup>
+
+</Project>

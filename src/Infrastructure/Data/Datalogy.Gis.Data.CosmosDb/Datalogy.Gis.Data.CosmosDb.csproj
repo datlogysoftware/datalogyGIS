@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Datalogy.Gis.Data.CosmosDb</RootNamespace>
+    <AssemblyName>Datalogy.Gis.Data.CosmosDb</AssemblyName>
+    <Description>Azure Cosmos DB data provider for DatalogySoftware GIS Framework. Cloud-native geospatial data storage with global distribution.</Description>
+    <PackageTags>$(PackageTags);cosmosdb;azure;cloud;nosql</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Datalogy.Gis.Domain\Datalogy.Gis.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.38.0" />
+  </ItemGroup>
+
+</Project>

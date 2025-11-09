@@ -1,0 +1,22 @@
+@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<div class="main-content">
+    <div class="map-container">
+        <h3>Counter Example</h3>
+
+        <p role="status">Current count: @currentCount</p>
+
+        <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+    </div>
+</div>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
