@@ -83,7 +83,7 @@ public class SqliteFeatureRepositoryTests : IDisposable
         // Assert
         result.Should().NotBeNull();
         result!.Id.Should().Be("test-002");
-        result.Attributes["name"].Should().Be("Istanbul");
+        result.Attributes["name"].ToString().Should().Be("Istanbul");
         result.Attributes["population"].ToString().Should().Be("15460000");
     }
 
@@ -121,8 +121,8 @@ public class SqliteFeatureRepositoryTests : IDisposable
         result.UpdatedAt.Should().NotBeNull();
 
         var updated = await _repository.GetByIdAsync("test-003");
-        updated!.Attributes["name"].Should().Be("Istanbul Updated");
-        updated.Attributes["new_field"].Should().Be("new_value");
+        updated!.Attributes["name"].ToString().Should().Be("Istanbul Updated");
+        updated.Attributes["new_field"].ToString().Should().Be("new_value");
     }
 
     [Fact]
