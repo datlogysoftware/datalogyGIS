@@ -85,7 +85,7 @@ jobs:
           --collect:"XPlat Code Coverage"
 
     - name: Upload test results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       if: always()
       with:
         name: test-results
@@ -94,7 +94,7 @@ jobs:
           **/TestResults/**/*.xml
 
     - name: Upload code coverage
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       if: always()
       with:
         name: code-coverage
