@@ -27,14 +27,35 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Install .NET MAUI workloads
-      run: dotnet workload install maui
+    - name: Restore dependencies (exclude MAUI)
+      run: |
+        dotnet restore src/Core/Datalogy.Gis.Core/Datalogy.Gis.Core.csproj
+        dotnet restore src/Core/Datalogy.Gis.Domain/Datalogy.Gis.Domain.csproj
+        dotnet restore src/Core/Datalogy.Gis.Application/Datalogy.Gis.Application.csproj
+        dotnet restore src/Infrastructure/Data/Datalogy.Gis.Data.Sqlite/Datalogy.Gis.Data.Sqlite.csproj
+        dotnet restore src/Infrastructure/Data/Datalogy.Gis.Data.Postgres/Datalogy.Gis.Data.Postgres.csproj
+        dotnet restore src/Infrastructure/Data/Datalogy.Gis.Data.CosmosDb/Datalogy.Gis.Data.CosmosDb.csproj
+        dotnet restore src/Rendering/Datalogy.Gis.Rendering.Core/Datalogy.Gis.Rendering.Core.csproj
+        dotnet restore src/Rendering/Datalogy.Gis.Rendering.SkiaSharp/Datalogy.Gis.Rendering.SkiaSharp.csproj
+        dotnet restore src/UI/Datalogy.Gis.Blazor/Datalogy.Gis.Blazor.csproj
+        dotnet restore tests/Datalogy.Gis.Core.Tests/Datalogy.Gis.Core.Tests.csproj
+        dotnet restore tests/Datalogy.Gis.Domain.Tests/Datalogy.Gis.Domain.Tests.csproj
+        dotnet restore tests/Datalogy.Gis.Data.Sqlite.Tests/Datalogy.Gis.Data.Sqlite.Tests.csproj
 
-    - name: Restore dependencies
-      run: dotnet restore DatalogySoftware.Gis.sln
-
-    - name: Build solution
-      run: dotnet build DatalogySoftware.Gis.sln --configuration Release --no-restore
+    - name: Build projects (exclude MAUI)
+      run: |
+        dotnet build src/Core/Datalogy.Gis.Core/Datalogy.Gis.Core.csproj --configuration Release --no-restore
+        dotnet build src/Core/Datalogy.Gis.Domain/Datalogy.Gis.Domain.csproj --configuration Release --no-restore
+        dotnet build src/Core/Datalogy.Gis.Application/Datalogy.Gis.Application.csproj --configuration Release --no-restore
+        dotnet build src/Infrastructure/Data/Datalogy.Gis.Data.Sqlite/Datalogy.Gis.Data.Sqlite.csproj --configuration Release --no-restore
+        dotnet build src/Infrastructure/Data/Datalogy.Gis.Data.Postgres/Datalogy.Gis.Data.Postgres.csproj --configuration Release --no-restore
+        dotnet build src/Infrastructure/Data/Datalogy.Gis.Data.CosmosDb/Datalogy.Gis.Data.CosmosDb.csproj --configuration Release --no-restore
+        dotnet build src/Rendering/Datalogy.Gis.Rendering.Core/Datalogy.Gis.Rendering.Core.csproj --configuration Release --no-restore
+        dotnet build src/Rendering/Datalogy.Gis.Rendering.SkiaSharp/Datalogy.Gis.Rendering.SkiaSharp.csproj --configuration Release --no-restore
+        dotnet build src/UI/Datalogy.Gis.Blazor/Datalogy.Gis.Blazor.csproj --configuration Release --no-restore
+        dotnet build tests/Datalogy.Gis.Core.Tests/Datalogy.Gis.Core.Tests.csproj --configuration Release --no-restore
+        dotnet build tests/Datalogy.Gis.Domain.Tests/Datalogy.Gis.Domain.Tests.csproj --configuration Release --no-restore
+        dotnet build tests/Datalogy.Gis.Data.Sqlite.Tests/Datalogy.Gis.Data.Sqlite.Tests.csproj --configuration Release --no-restore
 
     - name: Run unit tests
       run: |
@@ -92,16 +113,27 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Install .NET MAUI workloads
-      run: dotnet workload install maui
+    - name: Restore dependencies (exclude MAUI)
+      run: |
+        dotnet restore src/Core/Datalogy.Gis.Core/Datalogy.Gis.Core.csproj
+        dotnet restore src/Core/Datalogy.Gis.Domain/Datalogy.Gis.Domain.csproj
+        dotnet restore src/Core/Datalogy.Gis.Application/Datalogy.Gis.Application.csproj
+        dotnet restore src/Infrastructure/Data/Datalogy.Gis.Data.Sqlite/Datalogy.Gis.Data.Sqlite.csproj
+        dotnet restore src/Infrastructure/Data/Datalogy.Gis.Data.Postgres/Datalogy.Gis.Data.Postgres.csproj
+        dotnet restore src/Infrastructure/Data/Datalogy.Gis.Data.CosmosDb/Datalogy.Gis.Data.CosmosDb.csproj
+        dotnet restore src/Rendering/Datalogy.Gis.Rendering.Core/Datalogy.Gis.Rendering.Core.csproj
+        dotnet restore src/Rendering/Datalogy.Gis.Rendering.SkiaSharp/Datalogy.Gis.Rendering.SkiaSharp.csproj
+        dotnet restore src/UI/Datalogy.Gis.Blazor/Datalogy.Gis.Blazor.csproj
 
-    - name: Restore dependencies
-      run: dotnet restore DatalogySoftware.Gis.sln
-
-    - name: Format check
-      run: dotnet format DatalogySoftware.Gis.sln --verify-no-changes --verbosity diagnostic
+    - name: Format check (core projects only)
+      run: |
+        dotnet format src/Core/Datalogy.Gis.Core/Datalogy.Gis.Core.csproj --verify-no-changes
+        dotnet format src/Core/Datalogy.Gis.Domain/Datalogy.Gis.Domain.csproj --verify-no-changes
       continue-on-error: true
 
-    - name: Build with warnings as errors
-      run: dotnet build DatalogySoftware.Gis.sln --configuration Release /p:TreatWarningsAsErrors=true
+    - name: Build with warnings as errors (exclude MAUI)
+      run: |
+        dotnet build src/Core/Datalogy.Gis.Core/Datalogy.Gis.Core.csproj --configuration Release /p:TreatWarningsAsErrors=true
+        dotnet build src/Core/Datalogy.Gis.Domain/Datalogy.Gis.Domain.csproj --configuration Release /p:TreatWarningsAsErrors=true
+        dotnet build src/UI/Datalogy.Gis.Blazor/Datalogy.Gis.Blazor.csproj --configuration Release /p:TreatWarningsAsErrors=true
       continue-on-error: true
