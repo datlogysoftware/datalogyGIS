@@ -24,7 +24,6 @@
     <RepositoryUrl>https://github.com/datalogysoft/gis-framework</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>gis;geospatial;datalogysoft;datalogy;spatial;mapping;netstandard;dotnet;csharp</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>
     <Description>DatalogySoftware GIS Framework - Powering Next-Generation Geospatial Intelligence for .NET</Description>
 
     <!-- Build Configuration -->
