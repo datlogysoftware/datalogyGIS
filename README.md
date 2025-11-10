@@ -29,6 +29,8 @@ DatalogySoftware GIS Framework is a modern, high-performance geospatial data pro
 
 ### Installation
 
+#### From NuGet.org (Recommended)
+
 Install the core package via NuGet:
 
 ```bash
@@ -47,6 +49,40 @@ dotnet add package Datalogy.Gis.Data.Postgres
 
 # Azure Cosmos DB
 dotnet add package Datalogy.Gis.Data.CosmosDb
+```
+
+#### From GitHub Packages
+
+Add GitHub Packages as a NuGet source:
+
+```bash
+# Add GitHub Packages source
+dotnet nuget add source https://nuget.pkg.github.com/datlogysoftware/index.json \
+  --name github \
+  --username YOUR_GITHUB_USERNAME \
+  --password YOUR_GITHUB_PAT \
+  --store-password-in-clear-text
+
+# Install packages
+dotnet add package Datalogy.Gis.Core --source github
+```
+
+Or configure in `nuget.config`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+    <add key="github" value="https://nuget.pkg.github.com/datlogysoftware/index.json" />
+  </packageSources>
+  <packageSourceCredentials>
+    <github>
+      <add key="Username" value="YOUR_GITHUB_USERNAME" />
+      <add key="ClearTextPassword" value="YOUR_GITHUB_PAT" />
+    </github>
+  </packageSourceCredentials>
+</configuration>
 ```
 
 ### Basic Usage
