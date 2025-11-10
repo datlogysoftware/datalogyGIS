@@ -19,6 +19,9 @@ jobs:
   publish:
     name: Build and Publish NuGet Packages
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
 
     steps:
     - name: Checkout code
