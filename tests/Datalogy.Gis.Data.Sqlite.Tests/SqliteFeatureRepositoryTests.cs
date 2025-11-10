@@ -213,6 +213,71 @@ public class SqliteFeatureRepositoryTests : IDisposable
         act.Should().Throw<ArgumentNullException>().WithParameterName("logger");
     }
 
+    [Theory]
+    [InlineData("DROP TABLE")]
+    [InlineData("features; DROP TABLE users--")]
+    [InlineData("features' OR '1'='1")]
+    [InlineData("123InvalidName")]
+    [InlineData("table-name")]
+    [InlineData("table.name")]
+    public void Constructor_InvalidTableName_ShouldThrowArgumentException(string invalidTableName)
+    {
+        // Act & Assert
+        Action act = () => new SqliteFeatureRepository(_connection, invalidTableName, _loggerMock.Object);
+        act.Should().Throw<ArgumentException>()
+            .WithMessage("*Table name must start with a letter or underscore*");
+    }
+
+    [Fact]
+    public async Task InsertAsync_NullFeature_ShouldThrowArgumentNullException()
+    {
+        // Act & Assert
+        Func<Task> act = async () => await _repository.InsertAsync(null!);
+        await act.Should().ThrowAsync<ArgumentNullException>().WithParameterName("feature");
+    }
+
+    [Fact]
+    public async Task UpdateAsync_NullFeature_ShouldThrowArgumentNullException()
+    {
+        // Act & Assert
+        Func<Task> act = async () => await _repository.UpdateAsync(null!);
+        await act.Should().ThrowAsync<ArgumentNullException>().WithParameterName("feature");
+    }
+
+    [Fact]
+    public async Task DeleteAsync_NullId_ShouldThrowArgumentNullException()
+    {
+        // Act & Assert
+        Func<Task> act = async () => await _repository.DeleteAsync(null!);
+        await act.Should().ThrowAsync<ArgumentNullException>().WithParameterName("id");
+    }
+
+    [Fact]
+    public async Task InsertAsync_FeatureWithComplexAttributes_ShouldPreserveTypes()
+    {
+        // Arrange
+        var feature = Feature.Builder()
+            .WithId("complex-001")
+            .WithPoint(0, 0)
+            .WithAttribute("string", "text")
+            .WithAttribute("number", 42)
+            .WithAttribute("decimal", 3.14)
+            .WithAttribute("boolean", true)
+            .WithAttribute("null", null)
+            .Build();
+
+        // Act
+        await _repository.InsertAsync(feature);
+        var result = await _repository.GetByIdAsync("complex-001");
+
+        // Assert
+        result.Should().NotBeNull();
+        result!.Attributes["string"].Should().Be("text");
+        result.Attributes.ContainsKey("number").Should().BeTrue();
+        result.Attributes.ContainsKey("boolean").Should().BeTrue();
+        result.Attributes.ContainsKey("null").Should().BeTrue();
+    }
+
     public void Dispose()
     {
         _connection?.Dispose();
